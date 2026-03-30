@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
@@ -12,10 +11,19 @@ class Pet:
     health_notes: str = ""
 
     def get_profile(self) -> dict:
-        pass
+        "gets the pet's profile information as a dictionary"
+        return {
+            "name": self.name,
+            "breed": self.breed,
+            "size": self.size,
+            "species": self.species,
+            "age_years": self.age_years,
+            "health_notes": self.health_notes
+        }
 
     def update_health_notes(self, notes: str) -> None:
-        pass
+        "updates the health notes for the pet"
+        self.health_notes = notes
 
 
 @dataclass
@@ -27,13 +35,13 @@ class CareTask:
     is_completed: bool = False
 
     def complete(self) -> None:
-        pass
+        self.is_completed = True
 
     def is_high_priority(self) -> bool:
-        pass
+        return self.priority >= 8
 
     def get_summary(self) -> str:
-        pass
+        return f"{self.task_type} - {self.duration_minutes} mins - Priority: {self.priority}"
 
 
 class Owner:
@@ -42,16 +50,16 @@ class Owner:
         self.email = email
         self.available_minutes = available_minutes
         self.preferences: list[str] = []
-        self.pet: Optional[Pet] = None
+        self.pets: list[Pet] = []
 
     def add_pet(self, pet: Pet) -> None:
-        pass
+        self.pets.append(pet)
 
     def set_available_time(self, minutes: int) -> None:
-        pass
+        self.available_minutes = minutes
 
     def get_preferences(self) -> list[str]:
-        pass
+        return self.preferences
 
 
 class DailyScheduler:
@@ -62,19 +70,21 @@ class DailyScheduler:
         self.scheduled_plan: list[CareTask] = []
 
     def add_task(self, task: CareTask) -> None:
-        pass
+        self.tasks.append(task)
 
     def remove_task(self, task_type: str) -> None:
-        pass
+        self.tasks = [task for task in self.tasks if task.task_type != task_type]
 
     def generate_plan(self) -> list[CareTask]:
-        pass
+        # Placeholder for the actual scheduling algorithm
+        self.scheduled_plan = sorted(self.tasks, key=lambda t: t.priority, reverse=True)
+        return self.scheduled_plan
 
     def explain_plan(self) -> str:
-        pass
+        return "Here's your daily care plan!"
 
     def get_total_duration(self) -> int:
-        pass
+        return sum(task.duration_minutes for task in self.tasks)
 
     def reset_plan(self) -> None:
-        pass
+        self.scheduled_plan = []

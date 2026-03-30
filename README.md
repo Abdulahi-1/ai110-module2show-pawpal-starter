@@ -10,6 +10,13 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 - Produce a daily plan and explain why it chose that plan
 
 
+
+## Screenshot
+
+<img width="564" height="719" alt="Screenshot 2026-03-29 at 9 35 22 PM" src="https://github.com/user-attachments/assets/d5325a07-387e-403d-a285-3d0a6190edc1" />
+
+
+
 ## Features
 
 ### Priority-Based Schedule Sorting

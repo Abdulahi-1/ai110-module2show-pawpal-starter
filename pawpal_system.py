@@ -35,12 +35,15 @@ class CareTask:
     is_completed: bool = False
 
     def complete(self) -> None:
+        "Marks the task as completed."
         self.is_completed = True
 
     def is_high_priority(self) -> bool:
+        "Returns True if the task priority is 8 or above."
         return self.priority >= 8
 
     def get_summary(self) -> str:
+        "Returns a short string summary of the task."
         return f"{self.task_type} - {self.duration_minutes} mins - Priority: {self.priority}"
 
 
@@ -53,12 +56,15 @@ class Owner:
         self.pets: list[Pet] = []
 
     def add_pet(self, pet: Pet) -> None:
+        "Adds a pet to the owner's list of pets."
         self.pets.append(pet)
 
     def set_available_time(self, minutes: int) -> None:
+        "Updates the owner's daily time budget in minutes."
         self.available_minutes = minutes
 
     def get_preferences(self) -> list[str]:
+        "Returns the owner's list of care preferences."
         return self.preferences
 
 
@@ -70,21 +76,27 @@ class DailyScheduler:
         self.scheduled_plan: list[CareTask] = []
 
     def add_task(self, task: CareTask) -> None:
+        "Adds a care task to the task pool."
         self.tasks.append(task)
 
     def remove_task(self, task_type: str) -> None:
+        "Removes all tasks matching the given task type from the pool."
         self.tasks = [task for task in self.tasks if task.task_type != task_type]
 
     def generate_plan(self) -> list[CareTask]:
+        "Sorts tasks by priority and returns the scheduled plan."
         # Placeholder for the actual scheduling algorithm
         self.scheduled_plan = sorted(self.tasks, key=lambda t: t.priority, reverse=True)
         return self.scheduled_plan
 
     def explain_plan(self) -> str:
+        "Returns a plain-English explanation of the scheduled plan."
         return "Here's your daily care plan!"
 
     def get_total_duration(self) -> int:
+        "Returns the total duration of all tasks in minutes."
         return sum(task.duration_minutes for task in self.tasks)
 
     def reset_plan(self) -> None:
+        "Clears the current scheduled plan."
         self.scheduled_plan = []

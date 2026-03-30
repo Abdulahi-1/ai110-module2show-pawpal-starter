@@ -16,12 +16,21 @@ def main():
     # Adds at least three Tasks with different times to those pets.
     task2 = CareTask(task_type="Grooming", duration_minutes=20, priority=7)
     task3 = CareTask(task_type="Exercise", duration_minutes=15, priority=9)
+    task_duplicate = CareTask(task_type="Feeding", duration_minutes=10, priority=5)  # duplicate of task
     pawpal_system.add_task(task)
     pawpal_system.add_task(task2)
     pawpal_system.add_task(task3)
+    pawpal_system.add_task(task_duplicate)
+
+    # Check for conflicts before generating the plan.
+    conflicts = pawpal_system.check_conflicts()
+    if conflicts:
+        print("Warnings:")
+        for warning in conflicts:
+            print(f"  [!] {warning}")
 
     # Print a "Today's Schedule" to the terminal.
-    print("Today's Schedule:")
+    print("\nToday's Schedule:")
     for task in pawpal_system.generate_plan():
         print(task.get_summary())
 

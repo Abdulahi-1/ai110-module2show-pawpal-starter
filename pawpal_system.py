@@ -100,3 +100,29 @@ class DailyScheduler:
     def reset_plan(self) -> None:
         "Clears the current scheduled plan."
         self.scheduled_plan = []
+
+    def check_conflicts(self) -> list[str]:
+        "Returns a list of warning strings for any scheduling conflicts detected."
+        warnings = []
+
+        # Warn if total task time exceeds the owner's available time
+        total = self.get_total_duration()
+        if total > self.owner.available_minutes:
+            overage = total - self.owner.available_minutes
+            warnings.append(
+                f"Tasks total {total} min but {self.owner.name} only has "
+                f"{self.owner.available_minutes} min available ({overage} min over budget)."
+            )
+
+        # Warn about duplicate task types
+        seen = set()
+        for task in self.tasks:
+            if task.task_type in seen:
+                warnings.append(f"Duplicate task detected: '{task.task_type}' appears more than once.")
+            seen.add(task.task_type)
+
+        # Warn if all tasks are already completed
+        if self.tasks and all(t.is_completed for t in self.tasks):
+            warnings.append("All tasks are already marked as completed.")
+
+        return warnings
